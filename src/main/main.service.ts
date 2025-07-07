@@ -32,12 +32,11 @@ async deactivateUser(publicKey: string): Promise<string> {
   return new Promise((resolve, reject) => {
     fs.promises.readFile(wg0ConfigPath, 'utf-8')
       .then(config => {
-        console.log(publicKey);
-        console.log(config);
         const updatedConfig = config.replace(
           new RegExp(`### Client ${publicKey}[\\s\\S]*?AllowedIPs = [\\d\\.]+/32`, 'g'),
           match => match.split('\n').map(line => `# ${line}`).join('\n')
         );
+console.log(updatedConfig);
 
         return fs.promises.writeFile(wg0ConfigPath, updatedConfig, 'utf-8');
       })
